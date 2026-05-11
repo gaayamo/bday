@@ -1,206 +1,576 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ════════════════════════════════════════════════
+   style.css — Birthday Edition 🎂
+   Dark midnight theme · Gold + Purple + Pink
+   ════════════════════════════════════════════════ */
+
+/* ── Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700;900&display=swap');
+
+/* ── Variables ── */
+:root {
+  --bg:          #080818;
+  --surface:     rgba(255, 255, 255, 0.04);
+  --border:      rgba(255, 255, 255, 0.08);
+  --gold:        #f0c060;
+  --gold-light:  #ffe08a;
+  --purple:      #b78af7;
+  --pink:        #ff6b9d;
+  --teal:        #5ee7df;
+  --text:        #f0e6ff;
+  --text-muted:  #9b93b8;
+  --glow-gold:   0 0 30px rgba(240, 192, 96, 0.25);
+  --glow-purple: 0 0 30px rgba(183, 138, 247, 0.25);
 }
 
-body {
-    background-color: #FFE4E8;
-    font-family: 'Nunito', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background-image:
-        radial-gradient(circle at 15% 85%, #ffb3c1 0%, transparent 40%),
-        radial-gradient(circle at 85% 15%, #ff8fa3 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, #fff0f3 0%, transparent 60%);
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Floating hearts background */
-.hearts-bg {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+html, body {
+  min-height: 100%;
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
 }
 
-.hearts-bg::before,
-.hearts-bg::after {
-    content: '💕 💗 💖 💝 💓';
-    position: absolute;
-    font-size: 1.5rem;
-    opacity: 0.15;
-    animation: floatHearts 12s linear infinite;
-    white-space: nowrap;
-    top: 100%;
-    left: 10%;
+/* ── Starfield canvas (main page) ── */
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.hearts-bg::after {
-    animation-delay: 6s;
-    left: 60%;
-    content: '💗 💕 💓 💖 💝';
+/* ── Confetti canvas (yes page) ── */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
-@keyframes floatHearts {
-    from { transform: translateY(0); opacity: 0.15; }
-    to { transform: translateY(-110vh); opacity: 0; }
-}
+/* ════════════════════════════════════════════════
+   MAIN PAGE — index.html
+   ════════════════════════════════════════════════ */
 
 .container {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 40px 20px;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  gap: 1.2rem;
+  animation: fadeInUp 0.8s ease both;
 }
 
-h1 {
-    font-size: 2.4rem;
-    color: #d63384;
-    font-weight: 900;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 0px rgba(214, 51, 132, 0.2);
-    animation: wiggle 2s ease-in-out infinite;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes wiggle {
-    0%, 100% { transform: rotate(-1deg); }
-    50% { transform: rotate(1deg); }
+/* Badge */
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(240,192,96,0.15), rgba(183,138,247,0.15));
+  border: 1px solid rgba(240, 192, 96, 0.3);
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.4rem 1.1rem;
+  border-radius: 100px;
 }
 
+/* Heading */
+.container h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 7vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.15;
+  background: linear-gradient(135deg, var(--gold-light), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.container h1 .name {
+  font-style: italic;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* GIF frame */
 .gif-container {
-    margin: 20px auto;
-    display: flex;
-    justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 12px;
+  box-shadow: var(--glow-purple);
+  transition: box-shadow 0.3s ease;
 }
 
-#cat-gif {
-    width: 200px;
-    height: 200px;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
-    transition: opacity 0.3s ease;
+.gif-container:hover {
+  box-shadow: var(--glow-gold);
 }
 
+#main-gif {
+  display: block;
+  width: clamp(160px, 40vw, 260px);
+  height: clamp(160px, 40vw, 260px);
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* Buttons */
 .buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#yes-btn,
+#no-btn {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding: 0.8rem 2.2rem;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease, filter 0.25s ease;
+  letter-spacing: 0.03em;
+  transform-origin: center;
 }
 
 #yes-btn {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-size: 1.6rem;
-    font-weight: 900;
-    font-family: 'Nunito', sans-serif;
-    padding: 18px 45px;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.45);
-    letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--gold), #f7971e);
+  color: #1a0e00;
+  box-shadow: 0 4px 24px rgba(240, 192, 96, 0.45);
 }
 
 #yes-btn:hover {
-    transform: scale(1.06) translateY(-2px);
-    box-shadow: 0 10px 28px rgba(76, 175, 80, 0.55);
-}
-
-#yes-btn:active {
-    transform: scale(0.98);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 32px rgba(240, 192, 96, 0.65);
 }
 
 #no-btn {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    padding: 12px 28px;
-    cursor: pointer;
-    transition: background 0.2s, left 0.25s ease, top 0.25s ease;
-    box-shadow: 0 4px 14px rgba(231, 76, 60, 0.4);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
 }
 
 #no-btn:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
+  border-color: var(--pink);
+  color: var(--pink);
 }
 
-
+/* Toast */
 #tease-toast {
-    margin-top: 14px;
-    font-size: 1rem;
-    color: #d63384;
-    font-weight: 700;
-    font-style: italic;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    min-height: 1.5rem;
+  position: fixed;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: rgba(30, 20, 60, 0.95);
+  border: 1px solid var(--purple);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.7rem 1.5rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(183, 138, 247, 0.3);
+  font-family: 'Courier New', monospace;
 }
 
 #tease-toast.show {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
-/* Music toggle button */
+/* Music toggle */
 #music-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.85);
-    border: none;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 1.4rem;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transition: transform 0.2s;
-    z-index: 100;
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 50;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+  color: var(--text);
 }
 
 #music-toggle:hover {
-    transform: scale(1.1);
+  background: rgba(240, 192, 96, 0.12);
+  border-color: var(--gold);
 }
 
-/* Yes page specific */
-.yes-container h1.yes-title {
-    font-size: 2.8rem;
-    animation: bounceTitle 0.6s ease infinite alternate;
+/* ════════════════════════════════════════════════
+   YES PAGE — yes.html
+   ════════════════════════════════════════════════ */
+
+body.yes-page {
+  background: radial-gradient(ellipse at 50% 0%, #1a0d3a 0%, var(--bg) 60%);
 }
 
-@keyframes bounceTitle {
-    from { transform: translateY(0) rotate(-1deg); }
-    to { transform: translateY(-12px) rotate(1deg); }
+.yes-container {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.5rem 4rem;
+  gap: 2.5rem;
 }
 
-.yes-message {
-    font-size: 1.4rem;
-    color: #e91e8c;
-    font-weight: 700;
-    margin-top: 24px;
-    animation: fadeIn 1s ease 0.5s both;
+/* Celebrate Header */
+.celebrate-header {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+.celebrate-header.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.yes-container #cat-gif {
-    width: 260px;
-    height: 260px;
+.celebrate-emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  animation: bounce 1.2s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.celebrate-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  background: linear-gradient(135deg, var(--gold-light), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.celebrate-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+/* ── Gift Card Wrapper ── */
+.gift-card-wrapper {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.gift-card-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Gift Card ── */
+.gift-card {
+  background: linear-gradient(160deg, #16103a 0%, #0d0d20 100%);
+  border: 1px solid rgba(240, 192, 96, 0.25);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(240, 192, 96, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(183, 138, 247, 0.1);
+}
+
+/* Card Header */
+.gift-card-header {
+  background: linear-gradient(135deg, rgba(240,192,96,0.12) 0%, rgba(183,138,247,0.12) 100%);
+  border-bottom: 1px solid rgba(240, 192, 96, 0.15);
+  padding: 1.8rem 2rem 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.gift-card-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.gift-card-recipient {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.gift-card-recipient strong {
+  color: var(--gold-light);
+}
+
+.gift-card-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Card message */
+.gift-card-message {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.gift-card-message p {
+  font-size: 0.97rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.message-sig {
+  margin-top: 0.6rem !important;
+  color: var(--pink) !important;
+  font-style: normal !important;
+  font-weight: 700;
+  font-size: 0.9rem !important;
+}
+
+/* Coupons label */
+.coupons-label {
+  padding: 1rem 2rem 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+/* Coupons list */
+.coupons {
+  padding: 0.5rem 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.coupon {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.coupon.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.coupon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  border-radius: inherit;
+}
+
+.coupon--gold   { background: rgba(240,192,96,0.08);   border-color: rgba(240,192,96,0.2);  }
+.coupon--purple { background: rgba(183,138,247,0.08);  border-color: rgba(183,138,247,0.2); }
+.coupon--pink   { background: rgba(255,107,157,0.08);  border-color: rgba(255,107,157,0.2); }
+.coupon--teal   { background: rgba(94,231,223,0.08);   border-color: rgba(94,231,223,0.2);  }
+
+.coupon-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  width: 2.5rem;
+  text-align: center;
+}
+
+.coupon-text { flex: 1; }
+
+.coupon-title {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.coupon-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.coupon-stamp {
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  border: 2px solid;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  transform: rotate(-6deg);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.coupon--gold   .coupon-stamp { border-color: var(--gold);   color: var(--gold);   }
+.coupon--purple .coupon-stamp { border-color: var(--purple); color: var(--purple); }
+.coupon--pink   .coupon-stamp { border-color: var(--pink);   color: var(--pink);   }
+.coupon--teal   .coupon-stamp { border-color: var(--teal);   color: var(--teal);   }
+
+/* Card footer */
+.gift-card-footer {
+  padding: 1rem 2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.barcode-lines {
+  display: flex;
+  gap: 2px;
+  height: 32px;
+  align-items: flex-end;
+}
+
+.barcode-lines::before {
+  /* CSS-generated barcode look */
+  content: '';
+  display: flex;
+}
+
+/* Fake barcode via gradient */
+.gift-card-footer .barcode-lines {
+  width: 140px;
+  height: 28px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(240,192,96,0.35) 0px,
+    rgba(240,192,96,0.35) 2px,
+    transparent 2px,
+    transparent 4px,
+    rgba(240,192,96,0.2) 4px,
+    rgba(240,192,96,0.2) 5px,
+    transparent 5px,
+    transparent 8px,
+    rgba(240,192,96,0.35) 8px,
+    rgba(240,192,96,0.35) 10px,
+    transparent 10px,
+    transparent 14px
+  );
+  border-radius: 2px;
+}
+
+.gift-card-fine-print {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  text-align: center;
+  font-style: italic;
+}
+
+/* P.S. Note */
+.ps-note {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem 1.8rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.ps-note.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ps-tag {
+  background: linear-gradient(135deg, var(--gold), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  margin-right: 0.3rem;
+}
+
+.ps-note strong {
+  color: var(--gold-light);
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .gift-card-header {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .coupon {
+    flex-wrap: wrap;
+  }
+
+  .coupon-stamp {
+    margin-left: auto;
+  }
+
+  #tease-toast {
+    white-space: normal;
+    max-width: 85vw;
+    text-align: center;
+    border-radius: 16px;
+    font-size: 0.8rem;
+  }
 }
