@@ -1,33 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yay! 🎉</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 Best. Decision. Ever.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="hearts-bg"></div>
+<body class="yes-page">
+  <canvas id="confetti-canvas"></canvas>
 
-    <div class="container yes-container">
-        <h1 class="yes-title">Knew you would say yes! 🎉</h1>
+  <div class="yes-container" id="yes-container">
 
-        <div class="gif-container">
-            <img id="cat-gif" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="celebrating">
-        </div>
-
-        <p class="yes-message">You just made me the happiest person! 💕</p>
+    <!-- Step 1: Celebration headline -->
+    <div class="celebrate-header" id="celebrate-header">
+      <div class="celebrate-emoji">🎉</div>
+      <h1>Best. Decision. Ever.</h1>
+      <p>Get ready for your surprise, birthday girl ✨</p>
     </div>
 
-    <audio id="bg-music" loop>
-        <source src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
-    </audio>
+    <!-- Step 2: Gift card -->
+    <div class="gift-card-wrapper" id="gift-card-wrapper">
 
-    <button id="music-toggle" onclick="toggleMusic()" title="Toggle music">🔊</button>
+      <!-- Card outer shell -->
+      <div class="gift-card">
+        <div class="gift-card-header">
+          <div class="gift-card-logo">🎂 Birthday Gift Card</div>
+          <div class="gift-card-recipient">Issued to: <strong>[HER NAME]</strong></div>
+          <div class="gift-card-date">Valid: Forever 💛</div>
+        </div>
 
-    <script src="yes-script.js"></script>
+        <div class="gift-card-message">
+          <p>
+            "I know I had you at 'Yes' — here's what you've unlocked. These
+            are not just promises. These are deployments. Already committed, can't roll back." 
+          </p>
+          <p class="message-sig">— [YOUR NAME] 💕</p>
+        </div>
+
+        <div class="coupons-label">🎁 Birthday Coupons — Tap to Redeem Anytime</div>
+
+        <div class="coupons">
+
+          <div class="coupon coupon--gold">
+            <div class="coupon-icon">🍽️</div>
+            <div class="coupon-text">
+              <div class="coupon-title">Dinner, Anywhere You Want</div>
+              <div class="coupon-desc">No budget, no limits. Pick the place. I'll handle everything else.</div>
+            </div>
+            <div class="coupon-stamp">VALID</div>
+          </div>
+
+          <div class="coupon coupon--purple">
+            <div class="coupon-icon">🌍</div>
+            <div class="coupon-text">
+              <div class="coupon-title">One Adventure — You Pick the Map</div>
+              <div class="coupon-desc">A day trip, a weekend, or something bigger. You dream it, I'll make it happen.</div>
+            </div>
+            <div class="coupon-stamp">VALID</div>
+          </div>
+
+          <div class="coupon coupon--pink">
+            <div class="coupon-icon">💻</div>
+            <div class="coupon-text">
+              <div class="coupon-title">One Tech Upgrade — You Choose the Specs</div>
+              <div class="coupon-desc">The IT girl deserves the best setup. Gadget, gear, or accessory — your call.</div>
+            </div>
+            <div class="coupon-stamp">VALID</div>
+          </div>
+
+          <div class="coupon coupon--teal">
+            <div class="coupon-icon">🎬</div>
+            <div class="coupon-text">
+              <div class="coupon-title">One Movie Night, Your Playlist</div>
+              <div class="coupon-desc">Zero judgment on the picks. Unlimited snacks. I'm just happy to be there.</div>
+            </div>
+            <div class="coupon-stamp">VALID</div>
+          </div>
+
+          <div class="coupon coupon--gold">
+            <div class="coupon-icon">💌</div>
+            <div class="coupon-text">
+              <div class="coupon-title">365 More Days Like This</div>
+              <div class="coupon-desc">Because you deserve to feel celebrated every single day, not just today.</div>
+            </div>
+            <div class="coupon-stamp">VALID</div>
+          </div>
+
+        </div>
+
+        <div class="gift-card-footer">
+          <div class="gift-card-barcode">
+            <!-- decorative barcode look -->
+            <div class="barcode-lines"></div>
+          </div>
+          <div class="gift-card-fine-print">
+            Non-transferable. Non-expirable. Redeemable anytime by [HER NAME] only. ♾️
+          </div>
+        </div>
+
+      </div>
+      <!-- /gift-card -->
+
+      <!-- P.S. real gift note -->
+      <div class="ps-note" id="ps-note">
+        <span class="ps-tag">P.S.</span>
+        There's a real gift too — this was just the opening act. 🎁<br>
+        Happy Birthday, <strong>[HER NAME]</strong>. I'm so glad you exist. 💛
+      </div>
+
+    </div>
+    <!-- /gift-card-wrapper -->
+
+  </div>
+
+  <audio id="bg-music" loop autoplay muted>
+    <source src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
+  </audio>
+  <button id="music-toggle" onclick="toggleMusic()" title="Toggle music">🔇</button>
+
+  <script src="yes-script.js"></script>
 </body>
 </html>
